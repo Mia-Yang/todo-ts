@@ -45,11 +45,27 @@ export function addItem(): void {
     }
 }
 
-export function removeItem(id: number) {
+export function removeItem(id: number): void {
     todoList.removeChild(document.getElementById(`${id}`));
 }
 
-export function toggleItem(id: number) {
+export function toggleItem(id: number): void {
      document.getElementById(`${id}`).classList.toggle("finished")
 }
  
+export function editItem(id: number): void {
+    const textSpan: HTMLElement = document.getElementById("text-" + id);
+    const originalText: string = textSpan.innerText;
+    
+    textSpan.addEventListener('blur', function() {
+        const newText: string = textSpan.innerText.trim()
+        textSpan.innerText = newText.length ? newText : originalText;
+    })
+}
+
+export function clearItems() {
+    while (todoList.firstChild) {
+        todoList.removeChild(todoList.lastChild);
+    }
+}
+
