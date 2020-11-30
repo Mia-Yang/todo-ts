@@ -1,5 +1,12 @@
 const headers:Headers = new Headers({'Content-Type': 'application/json'});
 const url:string = "http://localhost:3000/todos";
+function setconfig(method:string, item?:any) {
+    return {
+        method: method,
+        headers,
+        body: JSON.stringify(item),
+    }  
+}
 
 interface todo {
     id: number,
@@ -7,19 +14,10 @@ interface todo {
     completed: boolean
 }
 
-export const getListFromServer = async function():Promise<any>{
+export const getListFromServer = async function(id?:number):Promise<any>{
+    let getFromUrl = id ? `${url}/${id}` : url;
     try {
-        const response = await fetch(url, { method: 'GET' });
-        const result = response.json();
-        return result;
-    } catch (error) {
-        console.error('Error:', error);
-    }
-  }
-
-export const getItemFromServer = async function(id?:number):Promise<any>{
-    try {
-        const response = await fetch(`${url}/${id}`, { method: 'GET' });
+        const response = await fetch(getFromUrl, { method: 'GET' });
         const result = response.json();
         return result;
     } catch (error) {
@@ -28,11 +26,7 @@ export const getItemFromServer = async function(id?:number):Promise<any>{
   }
 
 export function postItemIntoServer(item:todo):void{
-    fetch(url, {
-            method: 'POST',
-            headers,
-            body: JSON.stringify(item),
-        })
+    fetch(url, setconfig('POST',item))
         .then(res => res.json())
         .then(data => {
             console.log('Post Success:', data);
@@ -44,11 +38,7 @@ export function postItemIntoServer(item:todo):void{
 
 // update list on json-server 
 export function updateItemInServer(item:todo):void {
-    fetch(`${url}/${item.id}`, {
-            method: 'PUT',
-            headers,
-            body: JSON.stringify(item),
-        })
+    fetch(`${url}/${item.id}`, setconfig('PUT', item))
        .then(res => res.json())
         .then(data => {
             console.log('Update Success:', data);
@@ -60,9 +50,7 @@ export function updateItemInServer(item:todo):void {
 
 // DELETE item in json-server 
 export function deleteItemInServer(id:number):void {
-    fetch(`${url}/${id}`, {
-            method: 'DELETE',
-        })
+    fetch(`${url}/${id}`, setconfig('DELETE'))
         .then(result => {
             console.log('Delete Success');
         })
