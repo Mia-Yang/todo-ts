@@ -49,3 +49,7 @@ export function removeItem(id: number) {
     todoList.removeChild(document.getElementById(`${id}`));
 }
 
+export function toggleItem(id: number) {
+     document.getElementById(`${id}`).classList.toggle("finished")
+}
+ 

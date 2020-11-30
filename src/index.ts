@@ -1,22 +1,26 @@
 import "@babel/polyfill"
 import {
     getListFromServer,
-    deleteItemInServer
+    deleteItemInServer,
+    updateItemInServer,
 } from './request'
 
 import {
     renderItem,
     addItem,
     removeItem,
+    toggleItem,
 } from './ui'
 
 // add a property to window
 declare global {
     interface Window {
       removeTodo: any;
+      toggleTodo: any;
     }
 }
 window.removeTodo = removeTodo;
+window.toggleTodo = toggleTodo;
 
 interface todo {
     id: number,
@@ -45,3 +49,14 @@ function removeTodo(id: number): void {
     deleteItemInServer(id)
     removeItem(id);
 }
+
+// toggle todo
+function toggleTodo(id: number) {
+    const spanElement:HTMLElement = document.getElementById("text-" + id);
+    getListFromServer(id)
+    .then(result => {updateItemInServer({...result, completed: !result.completed });
+                     result.completed ? spanElement.setAttribute("contentEditable", "true") : spanElement.setAttribute("contentEditable", "false");})
+    .then(() => toggleItem(id))
+}
+
+// 
