@@ -45,3 +45,7 @@ export function addItem(): void {
     }
 }
 
+export function removeItem(id: number) {
+    todoList.removeChild(document.getElementById(`${id}`));
+}
+
