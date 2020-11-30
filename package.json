@@ -4,8 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "ts-node-dev --respawn --transpileOnly src/index.ts",
-        "dev": "parcel index.html",
+        "start": "parcel index.html",
         "server": "json-server --watch json-server/db.json"
     },
     "repository": {
