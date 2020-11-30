@@ -1,5 +1,12 @@
 const headers:Headers = new Headers({'Content-Type': 'application/json'});
 const url:string = "http://localhost:3000/todos";
+interface todo {
+    id: number,
+    text: string,
+    completed: boolean
+}
+
+//set configs
 function setconfig(method:string, item?:any) {
     return {
         method: method,
@@ -8,12 +15,7 @@ function setconfig(method:string, item?:any) {
     }  
 }
 
-interface todo {
-    id: number,
-    text: string,
-    completed: boolean
-}
-
+// get history from json-server
 export const getListFromServer = async function(id?:number):Promise<any>{
     let getFromUrl = id ? `${url}/${id}` : url;
     try {
@@ -25,6 +27,7 @@ export const getListFromServer = async function(id?:number):Promise<any>{
     }
   }
 
+// post new todo
 export function postItemIntoServer(item:todo):void{
     fetch(url, setconfig('POST',item))
         .then(res => res.json())
@@ -48,7 +51,7 @@ export function updateItemInServer(item:todo):void {
         });
 }
 
-// DELETE item in json-server 
+// delete item in json-server 
 export function deleteItemInServer(id:number):void {
     fetch(`${url}/${id}`, setconfig('DELETE'))
         .then(result => {
