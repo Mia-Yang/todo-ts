@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "parcel index.html",
-        "server": "json-server --watch json-server/db.json"
+        "server": "json-server --watch json-server/db.json",
+        "style:prettier": "prettier --write \"src/**/*.ts\""
     },
     "repository": {
         "type": "git",
@@ -20,6 +21,7 @@
     "devDependencies": {
         "json-server": "^0.16.3",
         "parcel-bundler": "^1.12.4",
+        "prettier": "2.2.1",
         "ts-node-dev": "^1.0.0",
         "typescript": "^4.1.2"
     },
